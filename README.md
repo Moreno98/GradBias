@@ -13,7 +13,7 @@ After installing PyTorch, you may install the required packages with the followi
 #  Install requirements
 pip install -r requirements.txt
 ```
-Please, install a spaCy trained pipeline with the following command:
+Please, install a spaCy trained pipeline. You may use the following command:
 ```bash
 python -m spacy download en_core_web_sm
 ```
