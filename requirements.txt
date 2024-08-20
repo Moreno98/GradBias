@@ -1,0 +1,5 @@
+tqdm
+accelerate
+diffusers
+transformers
+clip
