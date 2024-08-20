@@ -3,3 +3,12 @@ accelerate
 diffusers
 transformers
 clip
+scikit-learn
+inflect
+fairscale
+sentencepiece
+tiktoken
+nltk
+setuptools
+wheel
+spacy
