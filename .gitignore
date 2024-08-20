@@ -153,9 +153,6 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
-
-gradbias/
-*.json
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
@@ -163,5 +160,9 @@ gradbias/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+gradbias/
+*.json
 out/
 slurm.sh
+methods/
+*.lock

@@ -1,7 +1,7 @@
 tqdm
 accelerate
 diffusers
-transformers
+transformers==4.30.2
 clip
 scikit-learn
 inflect
@@ -12,3 +12,6 @@ nltk
 setuptools
 wheel
 spacy
+einops
+salesforce-lavis
+blobfile
