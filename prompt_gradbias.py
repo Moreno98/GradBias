@@ -12,12 +12,9 @@ def main(opt, caption, question, choices):
     grad_bias = GradBias(
         gen_config=opt['generator'],
         vqa_info=opt['vqa'],
-        loss=opt['loss'],
         devices=devices,
-        use_gradcam=opt['use_gradcam'],
         save_info=opt['save_info'],
-        loss_interval=opt['loss_interval'],
-        accumulate_grad=opt['accumulate_grad'],
+        loss_interval=opt['loss_interval']
     )
     
     word_gradients_mean = grad_bias.run_pipeline(

@@ -49,6 +49,7 @@ class GradBias:
             safe_checker=False
         )
         
+        self.sd.dm.detach_output = False
         self.sd_tokenizer = self.sd.dm.tokenizer
         self.clear_memory = False
         if 'xl' in gen_config['version']:
