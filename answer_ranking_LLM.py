@@ -59,8 +59,7 @@ def run(opt, data):
                         if len(outputs) not in [2,3,4]:
                             print(f"Long answer error: {caption_id} {llm_output}")
                             print('-------')
-                            import sys
-                            sys.exit(1)
+                            continue
 
                         valid_answer = False
                         for output in outputs:
@@ -83,8 +82,7 @@ def run(opt, data):
                         
                         if not valid_answer:
                             print(f"Invalid answer error: {caption_id}, {bias_cluster}, {bias_name}, {class_cluster}, {candidate_word}")
-                            import sys
-                            sys.exit(1)
+                            continue
 
                     yes_prob = torch.tensor(yes_probs_prompt_level).mean()
                     final_word = candidate_word 

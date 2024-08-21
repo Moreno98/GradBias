@@ -150,8 +150,8 @@ LLM_CONFIG = {
     'LLMs': {
         'llama2-7B': {
             'class': Llama_2,
-            # 'force_answer_prompt': 'Answer: ',
-            'force_answer_prompt': None,
+            'force_answer_prompt': 'Answer: ', # this forces the model to answer, avoiding a 'I cannot anoswer' response
+            # 'force_answer_prompt': None,
             'N_CUDA': 1,
             'model_parallel_size': 1,
             'weights_path': '<path>/llama-2-7b-chat',
@@ -163,8 +163,8 @@ LLM_CONFIG = {
         },
         'llama2-13B': {
             'class': Llama_2,
-            # 'force_answer_prompt': 'Answer: ',
-            'force_answer_prompt': None,
+            'force_answer_prompt': 'Answer: ',
+            # 'force_answer_prompt': None,
             'N_CUDA': 2,
             'model_parallel_size': 2,
             'weights_path': '<path>/llama-2-13b-chat',
@@ -176,8 +176,8 @@ LLM_CONFIG = {
         },
         'llama3-8B': {
             'class': Llama_3,
-            # 'force_answer_prompt': 'Answer: ',
-            'force_answer_prompt': None,
+            'force_answer_prompt': 'Answer: ',
+            # 'force_answer_prompt': None,
             'N_CUDA': 1,
             'model_parallel_size': 1,
             'weights_path': '<path>/Meta-Llama-3-8B-Instruct',
@@ -189,8 +189,8 @@ LLM_CONFIG = {
         },
         'llama3-70B': {
             'class': Llama_3,
-            # 'force_answer_prompt': 'Answer: ',
-            'force_answer_prompt': None,
+            'force_answer_prompt': 'Answer: ',
+            # 'force_answer_prompt': None,
             'N_CUDA': 8,
             'model_parallel_size': 8,
             'weights_path': '<path>/Meta-Llama-3-70B-Instruct',

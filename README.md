@@ -31,6 +31,8 @@ We make available:
 
 The results of the experiments will be saved under the `methods` folder.
 ### Baselines
+Before running the baselines, make sure to download the models weights (e.g., Llama2-7B, Llama2-13B, etc.) using the official repo and update the paths in `utils/config.py` file. 
+
 To run the baselines, you can use the following commands:
 ```bash
 # Run syntax tree baseline

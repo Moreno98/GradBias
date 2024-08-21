@@ -69,9 +69,7 @@ def argparse_image_gen_gt():
     parser = argparse.ArgumentParser(description='Compute gt', formatter_class=RawTextHelpFormatter)
     parser.add_argument('--generator', type=str, default='sd-2', choices=list(GENERATORS.keys()), help='Generator to use')
     parser.add_argument('--seeds', type=int, nargs='+', default=[0,1,2,3,4], help='Seeds to use')
-    parser.add_argument('--use_gradcam', type=bool, default=False, help='Use gradcam')
     parser.add_argument('--dataset', type=str, default='coco', choices=list(DATASET_CONFIG.keys()), help='Dataset related proposed biases to use')
-    parser.add_argument('--edit_mode', type=str, default='generic', choices=['generic', 'remove'], help='Remove or make generic the words')
     opt = vars(parser.parse_args())
     opt['save_path'] = os.path.join('generated_images', opt['dataset'], opt['generator'], 'gt', opt['edit_mode'])
     os.makedirs(opt['save_path'], exist_ok=True)
@@ -83,11 +81,7 @@ def argparse_image_gen_gt():
             opt['generator']['model_class'] = StableDiffusionPipeline
 
     opt['n-images'] = len(opt['seeds'])
-
-    if opt['edit_mode'] == 'generic':
-        opt['edit_word'] = utils.generic_word
-    else:
-        opt['edit_word'] = utils.remove_word
+    opt['edit_word'] = utils.remove_word
     return opt
 
 def argparse_VQA_gt():

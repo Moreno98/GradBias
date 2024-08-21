@@ -100,8 +100,7 @@ class DDP_VQA(DDP):
                                 if len(outputs) != 2 and len(outputs) != 3:
                                     print(f"Long answer error: {caption_id}, {bias_cluster}, {bias_name}, {class_cluster}, {candidate_word}")
                                     print('-------')
-                                    import sys
-                                    sys.exit(1)
+                                    continue
 
                                 valid_answer = False
                                 for output in outputs:
@@ -124,8 +123,7 @@ class DDP_VQA(DDP):
                                 
                                 if not valid_answer:
                                     print(f"Invalid answer error: {caption_id}, {bias_cluster}, {bias_name}, {class_cluster}, {candidate_word}")
-                                    import sys
-                                    sys.exit(1)
+                                    continue
 
                             yes_probs_prompt_level.append(np.mean(yes_probs))
 
