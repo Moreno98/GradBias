@@ -80,8 +80,7 @@ def worker(process_id, gpu_ids, opt, splitted_data, classes):
             word_gradients_mean = grad_bias.run_pipeline(
                 prompt=caption,
                 question=f'{question} Answer with one word',
-                choices=choices,
-                adv_choices=choices
+                choices=choices
             )
             global_word_gradients_mean.append(word_gradients_mean)
             
