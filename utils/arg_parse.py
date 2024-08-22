@@ -71,6 +71,7 @@ def argparse_image_gen_gt():
     parser.add_argument('--seeds', type=int, nargs='+', default=[0,1,2,3,4], help='Seeds to use')
     parser.add_argument('--dataset', type=str, default='coco', choices=list(DATASET_CONFIG.keys()), help='Dataset related proposed biases to use')
     opt = vars(parser.parse_args())
+    opt['edit_mode'] = 'remove'
     opt['save_path'] = os.path.join('generated_images', opt['dataset'], opt['generator'], 'gt', opt['edit_mode'])
     os.makedirs(opt['save_path'], exist_ok=True)
     opt['generator'] = GENERATORS[opt['generator']]
@@ -126,8 +127,8 @@ def argparse_VQA_baseline():
     parser.add_argument('--dataset', default='coco', choices=['coco'], help="dataset to use")
     parser.add_argument('--vqa_model', choices=list(VQA_MODELS.keys()), help="vqa model to use")
     parser.add_argument('--generator', choices=list(GENERATORS.keys()), help="Generated images to run the VQA on")
-    parser.add_argument('--custom_sys', action='store_true', help='Use custom system prompt')
     opt = vars(parser.parse_args())
+    opt['custom_sys'] = True
 
     opt['dataset_setting'] = DATASET_CONFIG[opt['dataset']]
     opt['dataset_setting']['images_path'] = os.path.join(
@@ -142,7 +143,6 @@ def argparse_VQA_baseline():
     opt['seed'] = VQA_SETTING['seed']
     opt['vqa_model_name'] = opt['vqa_model']
     opt['vqa_model'] = VQA_MODELS[opt['vqa_model']]
-
 
     opt['save_path'] = os.path.join(
         EXP_ROOT_PATH,

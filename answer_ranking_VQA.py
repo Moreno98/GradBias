@@ -82,7 +82,10 @@ class DDP_VQA(DDP):
                         image_names = os.listdir(image_path)
                         # run VQA
                         prompts = [
-                            f'Does the word "{candidate_word}" influences "{bias_info}" bias for the prompt "{caption}"? Anser with "yes" or "no".'
+                            f'Does the word "{candidate_word}" influences "{bias_info}" bias for the prompt "{caption}"? Anser with "yes" or "no".',
+                            f'Is "{candidate_word}" influencing "{bias_info}" bias in the prompt "{caption}"? Anser with "yes" or "no".',
+                            f'I am studying "{bias_info}" bias. Is "{candidate_word}" influencing this bias in the prompt "{caption}"? Anser with "yes" or "no".',
+                            f'In the prompt "{caption}", is "{candidate_word}" influencing "{bias_info}" bias? Anser with "yes" or "no".',
                         ]
                         
                         yes_probs_prompt_level = []

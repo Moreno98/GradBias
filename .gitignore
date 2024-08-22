@@ -166,3 +166,5 @@ out/
 slurm.sh
 methods/
 *.lock
+generated_images/
+tables/
