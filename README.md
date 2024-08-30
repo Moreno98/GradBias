@@ -35,8 +35,8 @@ This code has been tested with `PyTorch 2.2.1`, `CUDA 11.8`, `CUDA 12.1` and `py
 ## Usage
 We provide code to:
 - Run the introduced baselines on OpenBias extracted biases.
-- Run GradBias on the same dataset.
-- Run GradBias indipendently with custom prompts and biases.
+- Run GradBias on the same dataset (`gradbias.py`).
+- Run GradBias indipendently with custom prompts and biases (`prompt_gradbias.py`).
 
 We make available:
 - The dataset used in our experiments: [Dataset](https://drive.google.com/file/d/1nGECdt0fcwiJA-5qJgvgnZbGBp4zHnNq/view?usp=sharing). This file should be put under `proposed_biases/coco/3`. 
@@ -74,7 +74,7 @@ For the LLM baseline, please make sure to use the appropriate `CUDA_VISIBLE_DEVI
 - llama2-13b: 2 GPUs
 - llama3-8b: 1 GPU
 - llama3-70b: 8 GPUs
-The VQA answer ranking script supports multi GPU. The results will be saved in the `methods` folder.
+Llava1.5-13B VQA answer ranking script requires 2 GPUs with enough memory. The results will be saved in the `methods` folder.
 
 ### GradBias
 GradBias can be run on the given dataset or indipendently with custom prompts and biases. 

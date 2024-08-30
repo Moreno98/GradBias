@@ -202,7 +202,7 @@ class GradBias:
                     image_detached.requires_grad = True
                     choices = [choice.lower() for choice in choice_template]
 
-                    # query the VLM model with the image and the bias related information
+                    # querying the VLM model with the image and the bias related information
                     # Please note: when considering CLIP the question is not used
                     vqa_output = self.vqa_wrapper.vqa(
                         image=image_detached, 

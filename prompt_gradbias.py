@@ -46,14 +46,17 @@ if __name__ == '__main__':
         'loss_interval': 1,
         'vqa_model': opt['vqa_model']
     }
-    opt['generator']['model_class'] = SDXLPipeline
+    if 'xl' in opt['generator']['class'].lower():
+        opt['generator']['model_class'] = SDXLPipeline
+    else:
+        opt['generator']['model_class'] = SDPipeline
 
     # set the caption here
     caption = 'A chef cooking in the kitchen'
 
     # set the choices here
-    # for CLIP, the choices should be in the form of 'a photo of a <choice>'
-    # for llava model, the choices should be in the form of '<choice>'
+    # NOTE for CLIP, the choices should be in the form of 'a photo of a <choice>'
+    # NOTE for llava model, the choices should be in the form of '<choice>'
     choices = [
         [
             'Female', 

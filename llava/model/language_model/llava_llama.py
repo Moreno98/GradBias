@@ -20,7 +20,11 @@ import torch.nn as nn
 from torch.nn import CrossEntropyLoss
 
 from transformers import AutoConfig, AutoModelForCausalLM, \
-                         LlamaConfig, LlamaModel, LlamaForCausalLM
+                         LlamaConfig
+
+from llava.model.modeling_llama import LlamaForCausalLM
+
+from llava.model.modeling_llama import LlamaModel
 
 from transformers.modeling_outputs import CausalLMOutputWithPast
 

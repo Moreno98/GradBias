@@ -171,7 +171,8 @@ class Llava():
                 temperature=0.2,
                 max_new_tokens=256,
                 use_cache=True,
-                stopping_criteria=[stopping_criteria])
+                stopping_criteria=[stopping_criteria]
+            )
 
         # print(len(output_ids[0]))
         # quit()
@@ -226,7 +227,6 @@ class Llava():
 
         input_ids = input_ids.to(self.model.device)
         
-        # with torch.inference_mode():
         output_ids = self.model.generate(
             input_ids,
             images=image_tensor,
@@ -234,10 +234,8 @@ class Llava():
             temperature=0.2,
             max_new_tokens=256,
             use_cache=True,
-            stopping_criteria=[stopping_criteria])
-
-        # print(len(output_ids[0]))
-        # quit()
+            stopping_criteria=[stopping_criteria]
+        )
 
         input_token_len = input_ids.shape[1]
         n_diff_input_output = (input_ids != output_ids[:, :input_token_len]).sum().item()

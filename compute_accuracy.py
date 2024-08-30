@@ -1,5 +1,6 @@
 import os
 import json
+import ast
 from utils.config import DATASET_CONFIG, BIASES_TO_CHECK
 from utils.datasets import LLM_dataset
 import utils.utils as utils
@@ -42,8 +43,6 @@ def main():
     vqa_baseline_models = ['llava-1.5-13b']
     table_path = 'tables'
     syntax_tree = {
-        'syntax_tree_root': 'root',
-        'syntax_tree_bias_related': 'bias_related',
         'syntax_tree_subj_related': 'subj',
     }
 
@@ -138,26 +137,26 @@ def main():
 
     print(f"Same distribution on {counts} prompts")
 
-    # path = f'{root_path}/GradBias/{vqa_GradBias}/{dataset}/{generator}/{loss}/'
-    # GradBias_results = {}
-    # for loss_interval in loss_intervals:
-    #     GradBias_results[loss_interval] = {}
-    #     for caption_id in gt:
-    #         GradBias_results[loss_interval][caption_id] = {}
+    path = f'{root_path}/GradBias/{vqa_GradBias}/{dataset}/{generator}/{loss}/'
+    GradBias_results = {}
+    for loss_interval in loss_intervals:
+        GradBias_results[loss_interval] = {}
+        for caption_id in gt:
+            GradBias_results[loss_interval][caption_id] = {}
 
     k = 4
     top_k = {
         i: 0 for i in range(k)
     }
-    # accuracies = {
-    #     'GradBias': {
-    #         loss_interval: top_k.copy() for loss_interval in loss_intervals
-    #     },
-    # }
+    accuracies = {
+        'GradBias': {
+            loss_interval: top_k.copy() for loss_interval in loss_intervals
+        },
+    }
     accuracies = {}
 
-    # for st in syntax_tree:
-    #     accuracies[st] = top_k.copy()
+    for st in syntax_tree:
+        accuracies[st] = top_k.copy()
 
     for llm in LLM_models:
         accuracies[llm] = top_k.copy()
@@ -167,10 +166,10 @@ def main():
     
     data_points = 0
 
-    # syntax_tree_results = {}
-    # for syntax_tree_approach in syntax_tree:
-    #     with open(f'{root_path}/Syntax_tree_baseline/{dataset}/Rankings_{syntax_tree[syntax_tree_approach]}.json', 'r') as f:
-    #         syntax_tree_results[syntax_tree_approach] = json.load(f)
+    syntax_tree_results = {}
+    for syntax_tree_approach in syntax_tree:
+        with open(f'{root_path}/Syntax_tree_baseline/{dataset}/Rankings_{syntax_tree[syntax_tree_approach]}.json', 'r') as f:
+            syntax_tree_results[syntax_tree_approach] = json.load(f)
     
     LLM_results = {}
     for LLM_model in LLM_models:
@@ -182,68 +181,67 @@ def main():
         with open(f'{root_path}/VQA_baseline/{dataset}/{vqa_baseline_model}/{generator}/{gt_mode}/vqa_answers.json', 'r') as f:
             vqa_baseline_results[vqa_baseline_model] = json.load(f)
 
-    # for caption_id in gt:
-    #     for bias_key in gt[caption_id]:
-    #         # GradBias Performance
-    #         for loss_interval in loss_intervals:
-    #             bias_cluster = bias_key.split('/')[0]
-    #             bias_name = bias_key.split('/')[1]
-    #             class_cluster = bias_key.split('/')[2]
+    for caption_id in gt:
+        for bias_key in gt[caption_id]:
+            # GradBias Performance
+            for loss_interval in loss_intervals:
+                bias_cluster = bias_key.split('/')[0]
+                bias_name = bias_key.split('/')[1]
+                class_cluster = bias_key.split('/')[2]
 
-    #             bias_info = bias_name
-    #             if bias_cluster.lower() not in bias_name.lower().split():
-    #                 bias_info = f'{bias_cluster} {bias_name}'
+                bias_info = bias_name
+                if bias_cluster.lower() not in bias_name.lower().split():
+                    bias_info = f'{bias_cluster} {bias_name}'
 
-    #             with open(os.path.join(path, loss_interval, caption_id, '_'.join([bias_cluster, bias_name, class_cluster]), 'avg_word_level_bias_mean.txt'), 'r') as f:
-    #                 data = f.readlines()
-    #                 for idx, l in enumerate(data):
-    #                     if 'Choices' in l:
-    #                         starting_idx = idx + 1
-    #                         break
-    #                 word_level_grad = data[starting_idx:]
+                with open(os.path.join(path, loss_interval, caption_id, '_'.join([bias_cluster, bias_name, class_cluster]), 'avg_word_level_bias_mean.txt'), 'r') as f:
+                    data = f.readlines()
+                    for idx, l in enumerate(data):
+                        if 'Choices' in l:
+                            starting_idx = idx + 1
+                            break
+                    word_level_grad = data[starting_idx:]
                     
-    #                 ranking = []
-    #                 occurrences = {}
-    #                 subj_found = False
-    #                 for word in word_level_grad:
-    #                     word_text = str(word.split(':')[0]).lower().replace('.', '')
-    #                     filtered_word = word_text.split('_')[0].translate(str.maketrans('', '', '!"#$%&()*+,-./:;<=>?@[\\]^{|}~'))
-    #                     if '\'s' in filtered_word:
-    #                         word_text = word_text.replace('\'s', '')
-    #                         filtered_word = filtered_word.replace('\'s', '')
-    #                     if not utils.is_bias_related(filtered_word, bias_info, generalizer) and not utils.is_stop_word(filtered_word) and utils.is_valid_word(filtered_word):
-    #                         if word_text not in occurrences:
-    #                             occurrences[word_text] = 1
-    #                         else:
-    #                             occurrences[word_text] += 1
-    #                             word_text = f"{word_text}_{occurrences[word_text]}"
-    #                         grad_text = word.split(':')[1].strip()
-    #                         try:
-    #                             grad_text = ast.literal_eval(grad_text)
-    #                             word_grad = [float(grad) for grad in grad_text]
-    #                         except Exception as e:
-    #                             print(f"Error {e} in ast.literal_eval: {grad_text}")
-    #                             print(loss_interval, caption_id, bias_key)
-    #                             quit()
-    #                         avg_grad = sum(word_grad)/len(word_grad)
-    #                         # max_grad = min(word_grad)
-    #                         # remove punctuation from word_text
-    #                         word_text = word_text.translate(str.maketrans('', '', '!"#$%&\()*+,./:;<=>?@[\\]^{|}~'))
-    #                         ranking.append((word_text, avg_grad))
+                    ranking = []
+                    occurrences = {}
+                    subj_found = False
+                    for word in word_level_grad:
+                        word_text = str(word.split(':')[0]).lower().replace('.', '')
+                        filtered_word = word_text.split('_')[0].translate(str.maketrans('', '', '!"#$%&()*+,-./:;<=>?@[\\]^{|}~'))
+                        if '\'s' in filtered_word:
+                            word_text = word_text.replace('\'s', '')
+                            filtered_word = filtered_word.replace('\'s', '')
+                        if not utils.is_bias_related(filtered_word, bias_info, generalizer) and not utils.is_stop_word(filtered_word) and utils.is_valid_word(filtered_word):
+                            if word_text not in occurrences:
+                                occurrences[word_text] = 1
+                            else:
+                                occurrences[word_text] += 1
+                                word_text = f"{word_text}_{occurrences[word_text]}"
+                            grad_text = word.split(':')[1].strip()
+                            try:
+                                grad_text = ast.literal_eval(grad_text)
+                                word_grad = [float(grad) for grad in grad_text]
+                            except Exception as e:
+                                print(f"Error {e} in ast.literal_eval: {grad_text}")
+                                print(loss_interval, caption_id, bias_key)
+                                quit()
+                            avg_grad = sum(word_grad)/len(word_grad)
+                            # remove punctuation from word_text
+                            word_text = word_text.translate(str.maketrans('', '', '!"#$%&\()*+,./:;<=>?@[\\]^{|}~'))
+                            ranking.append((word_text, avg_grad))
 
-    #                 ranking = sorted(ranking, key=lambda x: x[1], reverse=True) 
-    #                 # assert len(ranking) == len(gt[caption_id][bias_key]), f"Length of ranking {len(ranking)} is not equal to length of ground truth {len(gt[caption_id][bias_key])}, {bias_cluster}, {caption_id}, caption: {captions_text[int(caption_id)][0]}. GradBias results: {ranking}, GT: {gt[caption_id][bias_key]}"
-    #                 if set([word[0] for word in ranking]) != set(gt[caption_id][bias_key]):
-    #                     word_ranking_set = set([word[0] for word in ranking])
-    #                     gt_set = set(gt[caption_id][bias_key])
-    #                     # print the different words
-    #                     print(f"Words in ranking but not in GT: {word_ranking_set.difference(gt_set)}")
-    #                     print(f'{word_ranking_set.union(gt_set).difference(word_ranking_set.intersection(gt_set))} - {caption_id} - {bias_key} - {captions_text[int(caption_id)][0]}')
+                    ranking = sorted(ranking, key=lambda x: x[1], reverse=True) 
+                    # assert len(ranking) == len(gt[caption_id][bias_key]), f"Length of ranking {len(ranking)} is not equal to length of ground truth {len(gt[caption_id][bias_key])}, {bias_cluster}, {caption_id}, caption: {captions_text[int(caption_id)][0]}. GradBias results: {ranking}, GT: {gt[caption_id][bias_key]}"
+                    if set([word[0] for word in ranking]) != set(gt[caption_id][bias_key]):
+                        word_ranking_set = set([word[0] for word in ranking])
+                        gt_set = set(gt[caption_id][bias_key])
+                        # print the different words
+                        print(f"Words in ranking but not in GT: {word_ranking_set.difference(gt_set)}")
+                        print(f'{word_ranking_set.union(gt_set).difference(word_ranking_set.intersection(gt_set))} - {caption_id} - {bias_key} - {captions_text[int(caption_id)][0]}')
 
-    #                     # print(f"Length of ranking {len(ranking)} is not equal to length of ground truth {len(gt[caption_id][bias_key])}, {bias_cluster}, {caption_id}, caption: {captions_text[int(caption_id)][0]}. GradBias results: {ranking}, GT: {gt[caption_id][bias_key]}")
+                        # print(f"Length of ranking {len(ranking)} is not equal to length of ground truth {len(gt[caption_id][bias_key])}, {bias_cluster}, {caption_id}, caption: {captions_text[int(caption_id)][0]}. GradBias results: {ranking}, GT: {gt[caption_id][bias_key]}")
                     
-    #                 if len(ranking) == len(gt[caption_id][bias_key]):
-    #                     GradBias_results[loss_interval][caption_id][bias_key] = [word[0] for word in ranking]
+                    if len(ranking) == len(gt[caption_id][bias_key]):
+                        GradBias_results[loss_interval][caption_id][bias_key] = [word[0] for word in ranking]
     
     for cpt_id in gt:
         for bias_key in gt[cpt_id]:
@@ -251,16 +249,16 @@ def main():
             
             # compute top-1, top-2, top-3, top-4
             true_words = gt_eq_scores[cpt_id][bias_key][0]
-            # for loss_interval in GradBias_results:
-            #     GradBias_ranking = GradBias_results[loss_interval][cpt_id][bias_key]
-            #     accuracies['GradBias'][loss_interval] = compute_accuracy(GradBias_ranking, true_words, gt_ranking, k, accuracies['GradBias'][loss_interval])
+            for loss_interval in GradBias_results:
+                GradBias_ranking = GradBias_results[loss_interval][cpt_id][bias_key]
+                accuracies['GradBias'][loss_interval] = compute_accuracy(GradBias_ranking, true_words, gt_ranking, k, accuracies['GradBias'][loss_interval])
 
-            # for syntax_tree_approach in syntax_tree_results:
-            #     if 'root' not in syntax_tree_approach:
-            #         syntax_tree_ranking = syntax_tree_results[syntax_tree_approach][cpt_id][bias_key]
-            #     else:
-            #         syntax_tree_ranking = syntax_tree_results[syntax_tree_approach][cpt_id]
-            #     accuracies[syntax_tree_approach] = compute_accuracy(filter_words(syntax_tree_ranking, gt_ranking), true_words, gt_ranking, k, accuracies[syntax_tree_approach])
+            for syntax_tree_approach in syntax_tree_results:
+                if 'root' not in syntax_tree_approach:
+                    syntax_tree_ranking = syntax_tree_results[syntax_tree_approach][cpt_id][bias_key]
+                else:
+                    syntax_tree_ranking = syntax_tree_results[syntax_tree_approach][cpt_id]
+                accuracies[syntax_tree_approach] = compute_accuracy(filter_words(syntax_tree_ranking, gt_ranking), true_words, gt_ranking, k, accuracies[syntax_tree_approach])
 
             for llm_model in LLM_results:
                 LLM_ranking = LLM_results[llm_model][cpt_id][bias_key]

@@ -2,7 +2,7 @@ tqdm
 accelerate
 diffusers
 transformers==4.30.2
-clip
+openai-clip
 scikit-learn
 inflect
 fairscale
