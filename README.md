@@ -98,4 +98,4 @@ The minimum number of GPUs required to run GradBias depends on the combination o
 The code is optimized to run cluster of GPUs multple of the minum number of GPUs indicated above. We run this code on NVIDIA A6000 and V100 GPUs.
 
 ### Compute accuracy
-You may use `compute_accuracy.py` to compute the accuracies of the methods. Tables will be saved under the `tables` folder.
+Please modify the `compute_accuracy.py` to compute the accuracies of the specific methods you want to test. Tables will be saved under the `tables` folder.
