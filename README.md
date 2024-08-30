@@ -2,7 +2,7 @@
 
 # GradBias: Unveiling Word Influence on Bias in Text-to-Image Generative Models
 
-[[`arXiv`](https://web3.arxiv.org/abs/2408.16700)][[`pdf`](https://web3.arxiv.org/pdf/2408.16700)][[`BibTeX`](#bibtex)]
+[[`arXiv`](https://arxiv.org/abs/2408.16700)][[`pdf`](https://arxiv.org/pdf/2408.16700)][[`BibTeX`](#bibtex)]
 
 [Moreno D`Incà](https://moreno98.github.io/), [Elia Peruzzo](https://helia95.github.io/), [Massimiliano Mancini](https://mancinimassimiliano.github.io/), [Xingqian Xu](https://xingqian2018.github.io/), [Humphrey Shi](https://www.humphreyshi.com/home), [Nicu Sebe](https://disi.unitn.it/~sebe/)
 
