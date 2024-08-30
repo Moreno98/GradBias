@@ -2,6 +2,8 @@
 
 # GradBias: Unveiling Word Influence on Bias in Text-to-Image Generative Models
 
+[[`arXiv`](https://web3.arxiv.org/abs/2408.16700)][[`pdf`](https://web3.arxiv.org/pdf/2408.16700)][[`BibTeX`](#bibtex)]
+
 [Moreno D`Incà](https://moreno98.github.io/), [Elia Peruzzo](https://helia95.github.io/), [Massimiliano Mancini](https://mancinimassimiliano.github.io/), [Xingqian Xu](https://xingqian2018.github.io/), [Humphrey Shi](https://www.humphreyshi.com/home), [Nicu Sebe](https://disi.unitn.it/~sebe/)
 
 </div>
@@ -99,3 +101,17 @@ The code is optimized to run cluster of GPUs multple of the minum number of GPUs
 
 ### Compute accuracy
 Please modify the `compute_accuracy.py` to compute the accuracies of the specific methods you want to test. Tables will be saved under the `tables` folder.
+
+## BibTex
+Please cite our work if you find it useful:
+```bibtex
+@misc{dincà2024gradbiasunveilingwordinfluence,
+      title={GradBias: Unveiling Word Influence on Bias in Text-to-Image Generative Models}, 
+      author={Moreno D'Incà and Elia Peruzzo and Massimiliano Mancini and Xingqian Xu and Humphrey Shi and Nicu Sebe},
+      year={2024},
+      eprint={2408.16700},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2408.16700}, 
+}
+```
