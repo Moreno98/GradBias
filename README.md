@@ -80,7 +80,7 @@ The VQA answer ranking script supports multi GPU. The results will be saved in t
 GradBias can be run on the given dataset or indipendently with custom prompts and biases. 
 - To run GradBias on the given dataset, you may use the following command:
 ```bash
-CUDA_VISIBLE_DEVICES=0 python gradbias.py --generator <generator> --vqa_model <VQA> --dataset coco
+CUDA_VISIBLE_DEVICES=0 python gradbias.py --generator <generator> --vqa_model <VQA> --dataset coco  --loss_interval 1
 ```
 - To run GradBias indipendently:
 ```bash
@@ -88,14 +88,14 @@ CUDA_VISIBLE_DEVICES=0 python prompt_gradbias.py --vqa_model <VQA> --generator <
 ```
 Please, modify the script according to the desired prompts and biases. The results will be displayed in the terminal.
 
-The number of GPUs required to run GradBias varies according to the generator and VQA model used:
+The minimum number of GPUs required to run GradBias depends on the combination of the generator and VQA model used:
 - SD-1.5 and CLIP: 1 GPU;
 - SD-1.5 and Llava1.5-13B: 2 GPUs;
 - SD-2 and CLIP: 1 GPU;
 - SD-2 and Llava1.5-13B: 3 GPUs;
 - SD-XL and CLIP: 2 GPUs;
 - SD-XL and Llava1.5-13B: 4 GPUs;
-We run this code on NVIDIA A6000 and V100 GPUs.
+The code is optimized to run cluster of GPUs multple of the minum number of GPUs indicated above. We run this code on NVIDIA A6000 and V100 GPUs.
 
 ### Compute accuracy
 You may use `compute_accuracy.py` to compute the accuracies of the methods. Tables will be saved under the `tables` folder.
