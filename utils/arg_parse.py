@@ -88,11 +88,11 @@ def argparse_image_gen_gt():
 def argparse_VQA_gt():
     parser = argparse.ArgumentParser(description='Commands description', formatter_class=RawTextHelpFormatter)
     parser.add_argument('--dataset', choices=['coco'], help="dataset to use")
-    parser.add_argument('--edit_mode', type=str, default='generic', choices=['generic', 'remove'], help='Remove or make generic the words')
     parser.add_argument('--vqa_model', choices=list(VQA_MODELS.keys()), help="vqa model to use")
     parser.add_argument('--generator', choices=list(GENERATORS.keys()), help="Generated images to run the VQA on")
     opt = vars(parser.parse_args())
 
+    opt['edit_mode'] = 'remove'
     opt['dataset_setting'] = DATASET_CONFIG[opt['dataset']]
     opt['dataset_setting']['images_path'] = os.path.join(
         'generated_images',
@@ -120,6 +120,8 @@ def argparse_VQA_gt():
     os.makedirs(opt['save_path'], exist_ok=True)
     opt['file_name'] = 'vqa_answers.json'
     
+    opt['custom_sys'] = False
+
     return opt
 
 def argparse_VQA_baseline():
