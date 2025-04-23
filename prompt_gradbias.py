@@ -65,7 +65,7 @@ if __name__ == '__main__':
     ] 
 
     # set the question here
-    # the question is required only by CLIP. Leave empty for llava.
+    # the question is required only by LLaVA. Leave empty for CLIP.
     # The question should be in the form of '<question> Answer with one word.'
     # The question should represent the bias you want to evaluate. 
     # For example, if you want to evaluate gender, the question can be "What is the gender of the person? Answer with one word."
