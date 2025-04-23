@@ -97,7 +97,8 @@ The minimum number of GPUs required to run GradBias depends on the combination o
 - SD-2 and Llava1.5-13B: 3 GPUs;
 - SD-XL and CLIP: 2 GPUs;
 - SD-XL and Llava1.5-13B: 4 GPUs;
-The code is optimized to run cluster of GPUs multple of the minum number of GPUs indicated above. We run this code on NVIDIA A6000 and V100 GPUs.
+
+The code is optimized to run on clusters of GPUs corresponding to the minum number of GPUs indicated above. We run this code on NVIDIA A6000 and V100 GPUs.
 
 ### Compute accuracy
 Please modify the `compute_accuracy.py` to compute the accuracies of the specific methods you want to test. Tables will be saved under the `tables` folder.
